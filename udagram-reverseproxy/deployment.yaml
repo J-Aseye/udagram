@@ -1,21 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udagram
+  name: reverseproxy
   labels:
-    app: udagram
+    app: reverseproxy
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: udagram
+      app: reverseproxy
   template:
     metadata:
       labels:
-        app: udagram
+        app: reverseproxy
     spec:
       containers:
       - name: udagram-reverseproxy
-        image: jaseye/udagram-reverseproxy
+        image: jaseye/udagram-reverseproxy:main
+        imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 8080
+      restartPolicy: Always
+        envFrom: 
+        - configMapRef:
+            name: env-configmap
+        - secretRef:
+            name: env-secret
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1030Mi"
+            cpu: "500m"
+          
+            

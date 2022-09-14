@@ -1,21 +1,98 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udagram
+  name: udagram-api-feed
   labels:
-    app: udagram
+    app: udagram-api-feed
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: udagram
+      app: udagram-api-feed
   template:
     metadata:
       labels:
-        app: udagram
+        app: udagram-api-feed
     spec:
       containers:
       - name: udagram-api-feed
-        image: jaseye/udagram-api-feed
+        image: jaseye/udagram-api-feed:main
         ports:
-        - containerPort: 80
+        - containerPort: 8080
+            env:
+             - name: aws_access_key_id
+               valueFrom:
+                 SecretRef:
+                    name: aws-secret
+                    key: aws_access_key_id
+             - name: aws_secret_access_key
+               valueFrom:
+                 SecretRef:
+                    name: aws-secret
+                    key: aws_secret_access_key
+              - name: POSTGRES_USERNAME
+               valueFrom:
+                 SecretRef:
+                    name: env-secret
+                    key: POSTGRES_USERNAME
+              - name: POSTGRES_PASSWORD
+               valueFrom:
+                 configMapKeyRef:
+                    name: env-secret
+                    key: POSTGRES_PASSWORD
+              - name: JWT_SECRET
+               valueFrom:
+                 configMapKeyRef:
+                    name: env-secret
+                    key: JWT_SECRET
+             - name: POSTGRES_HOST
+               valueFrom:
+                 configMapKeyRef:
+                    name: env-configmap
+                    key: POSTGRES_HOST
+            - name: POSTGRES_DB
+               valueFrom:
+                 configMapKeyRef:
+                    name: env-configmap
+                    key: POSTGRES_DB
+            - name: AWS_BUCKET
+               valueFrom:
+                 configMapKeyRef:
+                    name: env-configmap
+                    key: AWS_BUCKET
+            - name: AWS_REGION
+               valueFrom:
+                 configMapKeyRef:
+                    name: env-configmap
+                    key: AWS_REGION
+            - name: AWS_PROFILE
+               valueFrom:
+                 configMapKeyRef:
+                    name: env-configmap
+                    key: AWS_PROFILE 
+            - name: URL
+               valueFrom:
+                 configMapKeyRef:
+                    name: env-configmap
+                    key: URL
+              volumeMounts:
+              - mountPath: "/root/.aws/"
+                name: aws-secret
+                readOnly: true 
+          volumes:
+          - name: env-configmap
+            configMap:
+              name: env-configmap
+          - name: env-secret
+            secretRef: 
+              name: env-secret
+          - name: aws-secret
+            secretRef: 
+              name: aws-secret
+        resources:
+          requests:
+            memory: "1000Mi"
+            cpu: "250m"
+          limits:
+            memory: "2000Mi"
+            cpu: "500m"

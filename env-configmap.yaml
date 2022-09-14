@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: ConfigMap
+metadata: 
+  name: env-configmap
+data: 
+    credentials:
+    POSTGRES_HOST: postgres.cf1rugss9okp.us-east-1.rds.amazonaws.com
+    POSTGRES_DB: postgres
+    AWS_BUCKET: fromyudagram-dev
+    AWS_REGION: us-east-1
+    AWS_PROFILE: default
+    URL: http://localhost:8100
