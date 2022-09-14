@@ -16,6 +16,7 @@ import {V0_USER_MODELS} from './controllers/v0/model.index';
   await sequelize.sync();
 
   const app = express();
+  // listening on port 8081 if feed-api is running on port 8080 as  microservice. For monolith, default to port 8080.
   const port = process.env.PORT || 8080;
 
   app.use(bodyParser.json());
