@@ -4,7 +4,7 @@ metadata:
   name: env-configmap
 data: 
     credentials:
-    POSTGRES_HOST: postgres.cf1rugss9okp.us-east-1.rds.amazonaws.com
+    POSTGRES_HOST: postgres.ci4h8g2e4ynn.us-east-1.rds.amazonaws.com
     POSTGRES_DB: postgres
     AWS_BUCKET: fromyudagram-dev
     AWS_REGION: us-east-1
