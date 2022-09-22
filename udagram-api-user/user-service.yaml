@@ -6,8 +6,9 @@ metadata:
     run: backend-user
 spec:
   ports:
-  - port: 80
-    -targetPort: 8080
+  - port: 8080
+    targetPort: 8080
     protocol: TCP
+  type: ClusterIP
   selector:
-    run: backend-user
+    app: backend-user
