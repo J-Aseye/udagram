@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend-user
-        image: jaseye/udagram-api-user:main
+        image: jaseye/udagram-api-user:v0
         ports:
         - containerPort: 8080
         imagePullPolicy : Always
