@@ -19,17 +19,15 @@ spec:
         image: jaseye/udagram-api-user:main
         ports:
         - containerPort: 8080
+        imagePullPolicy : Always
+        resources:
+          requests:
+            memory: "1000Mi"
+            cpu: "250m"
+          limits:
+            memory: "2000Mi"
+            cpu: "500m"
         env:
-           - name: AWS_ACCESS_KEY_ID
-             valueFrom:
-               secretKeyRef:
-                 name: aws-secret
-                 key: aws_access_key_id
-           - name: AWS_SECRET_ACCESS_KEY
-             valueFrom:
-               secretKeyRef:
-                 name: aws-secret
-                 key: aws_secret_access_key
            - name: POSTGRES_USERNAME
              valueFrom:
                secretKeyRef:
@@ -74,12 +72,13 @@ spec:
              valueFrom:
                secretKeyRef:
                  name: env-secret
-                 key: jwt_secret               
-        resources:
-          requests:
-            memory: "1000Mi"
-            cpu: "250m"
-          limits:
-            memory: "2000Mi"
-            cpu: "500m"
-        
+                 key: jwt_secret           
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true
+      volumes:
+           - name: aws-secret
+             secret:
+               secretName: aws-secret
+               optional: false 

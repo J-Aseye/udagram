@@ -28,16 +28,6 @@ spec:
         ports:
         - containerPort: 80
         env:
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-               secretKeyRef:
-                 name: aws-secret
-                 key: aws_access_key_id
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-               secretKeyRef:
-                 name: aws-secret
-                 key: aws_secret_access_key
             - name: AWS_BUCKET
               valueFrom:
                configMapKeyRef:
@@ -62,6 +52,16 @@ spec:
               valueFrom:
                secretKeyRef:
                  name: env-secret
-                 key: jwt_secret 
+                 key: jwt_secret
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true
+      volumes:
+           - name: aws-secret
+             secret:
+               secretName: aws-secret
+               optional: false           
       restartPolicy: Always
+
             
