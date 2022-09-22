@@ -9,3 +9,4 @@ data:
     aws_region: "us-east-1"
     aws_profile: "default"
     url: "http://localhost:8100"
+    jwt_secret: "testing"

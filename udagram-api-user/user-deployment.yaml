@@ -70,8 +70,8 @@ spec:
                  key: url
            - name: JWT_SECRET
              valueFrom:
-               secretKeyRef:
-                 name: env-secret
+               configMapKeyRef:
+                 name: env-configmap
                  key: jwt_secret           
         volumeMounts:
         - name: aws-secret
