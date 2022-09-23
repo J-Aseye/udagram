@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: jaseye/udagram-frontend:production
+        image: jaseye/udagram-frontend:main
         ports:
         - containerPort: 80
         resources:
