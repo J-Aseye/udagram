@@ -8,5 +8,5 @@ data:
     aws_bucket: "formyudagram-dev"
     aws_region: "us-east-1"
     aws_profile: "default"
-    url: "http://localhost:8100"
+    url: "http://a3249996e44014bd493f333a0c27518c-1623678033.us-east-1.elb.amazonaws.com:8100"
     jwt_secret: "testing"
